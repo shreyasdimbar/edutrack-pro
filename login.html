@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - EduTrack Pro</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .login-container {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 25px;
+      padding: 50px 40px;
+      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 450px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      animation: fadeIn 0.5s ease;
+      transition: transform 0.2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .logo-section {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .logo-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 15px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      color: white;
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    }
+
+    .login-container h2 {
+      color: #2d3748;
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .subtitle {
+      color: #718096;
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 14px;
+    }
+
+    .form-group {
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      color: #2d3748;
+      font-weight: 600;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    select, input {
+      width: 100%;
+      padding: 15px 20px;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      background: white;
+      color: #2d3748;
+      font-size: 15px;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    select:focus, input:focus {
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    select {
+      cursor: pointer;
+    }
+
+    input::placeholder {
+      color: #a0aec0;
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+      margin-top: 10px;
+    }
+
+    .login-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 35px rgba(102, 126, 234, 0.6);
+    }
+
+    .login-btn:active {
+      transform: translateY(0);
+    }
+
+    .signup-link {
+      text-align: center;
+      margin-top: 25px;
+      color: #718096;
+      font-size: 14px;
+    }
+
+    .signup-link a {
+      color: #667eea;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    .signup-link a:hover {
+      color: #764ba2;
+    }
+
+    .role-icon {
+      margin-right: 8px;
+    }
+
+    /* Demo Credentials Box */
+    .demo-credentials {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+      border: 2px solid rgba(102, 126, 234, 0.3);
+      max-width: 280px;
+      animation: slideIn 0.5s ease;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(100px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    .demo-credentials h3 {
+      color: #667eea;
+      font-size: 16px;
+      margin-bottom: 15px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .demo-item {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 12px 15px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .demo-item:hover {
+      transform: translateX(-5px);
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .demo-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .demo-item strong {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    .demo-item small {
+      display: block;
+      font-size: 11px;
+      opacity: 0.9;
+    }
+
+    @media (max-width: 768px) {
+      .demo-credentials {
+        bottom: 10px;
+        right: 10px;
+        left: 10px;
+        max-width: none;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .login-container {
+        padding: 40px 25px;
+      }
+
+      .login-container h2 {
+        font-size: 24px;
+      }
+
+      .demo-credentials {
+        position: static;
+        margin-top: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="logo-section">
+      <div class="logo-icon">
+        <i class="fas fa-graduation-cap"></i>
+      </div>
+      <h2>EduTrack Pro</h2>
+      <p class="subtitle">Sign in to manage academic activities</p>
+    </div>
+
+    <form id="loginForm" onsubmit="handleLogin(event)">
+      <div class="form-group">
+        <label for="role">
+          <i class="fas fa-user-tag role-icon"></i>Login As
+        </label>
+        <select id="role" required>
+          <option value="" disabled selected>Select Your Role</option>
+          <option value="admin">👨‍💼 Admin</option>
+          <option value="student">🎓 Student</option>
+          <option value="coordinator">👨‍🏫 Coordinator</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="email">
+          <i class="fas fa-envelope role-icon"></i>Email Address
+        </label>
+        <input type="email" id="email" placeholder="Enter your email" required>
+      </div>
+
+      <div class="form-group">
+        <label for="password">
+          <i class="fas fa-lock role-icon"></i>Password
+        </label>
+        <input type="password" id="password" placeholder="Enter your password" required>
+      </div>
+
+      <button type="submit" class="login-btn">
+        <i class="fas fa-sign-in-alt"></i> Login
+      </button>
+    </form>
+
+    <p class="signup-link">Don't have an account? <a href="#">Sign up</a></p>
+  </div>
+
+  <!-- Demo Credentials Box -->
+  <div class="demo-credentials">
+    <h3>
+      <i class="fas fa-info-circle"></i> Demo Credentials
+    </h3>
+    <div class="demo-item" onclick="fillCredentials('admin', 'admin@edutrack.com', 'admin123')">
+      <strong>👨‍💼 Admin Login</strong>
+      <small>Email: admin@edutrack.com</small>
+      <small>Password: admin123</small>
+    </div>
+    <div class="demo-item" onclick="fillCredentials('student', 'student@edutrack.com', 'student123')">
+      <strong>🎓 Student Login</strong>
+      <small>Email: student@edutrack.com</small>
+      <small>Password: student123</small>
+    </div>
+    <div class="demo-item" onclick="fillCredentials('coordinator', 'coordinator@edutrack.com', 'coord123')">
+      <strong>👨‍🏫 Coordinator Login</strong>
+      <small>Email: coordinator@edutrack.com</small>
+      <small>Password: coord123</small>
+    </div>
+  </div>
+
+  <script>
+    // Fill credentials function
+    function fillCredentials(role, email, password) {
+      document.getElementById('role').value = role;
+      document.getElementById('email').value = email;
+      document.getElementById('password').value = password;
+      
+      // Add a subtle animation to show it's filled
+      const form = document.getElementById('loginForm');
+      form.style.transform = 'scale(1.02)';
+      setTimeout(() => {
+        form.style.transform = 'scale(1)';
+      }, 200);
+    }
+
+    function handleLogin(event) {
+      event.preventDefault();
+      
+      const role = document.getElementById('role').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      // Simple validation
+      if (!role || !email || !password) {
+        alert('Please fill in all fields');
+        return;
+      }
+
+      // Role-based redirection
+      switch(role) {
+        case 'admin':
+          window.location.href = 'admin.html';
+          break;
+        case 'student':
+          window.location.href = 'student.html';
+          break;
+        case 'coordinator':
+          window.location.href = 'coordinator.html';
+          break;
+        default:
+          alert('Please select a valid role');
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Profile - EduTrack Pro</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
+      padding-bottom: 40px;
+    }
+
+    /* Top Navigation Bar */
+    .top-nav {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 15px 0;
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .nav-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 30px;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .nav-btn {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .nav-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+    }
+
+    .nav-btn.secondary {
+      background: white;
+      color: #667eea;
+      border: 2px solid #667eea;
+      box-shadow: none;
+    }
+
+    .nav-btn.secondary:hover {
+      background: #f8f9ff;
+    }
+
+    /* Main Container */
+    .main-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 30px;
+    }
+
+    /* Profile Header Card */
+    .profile-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 25px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+      padding: 40px;
+      margin-bottom: 30px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .profile-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .profile-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .profile-info {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+    }
+
+    .profile-pic {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 5px solid #667eea;
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    }
+
+    .profile-details h2 {
+      margin: 0;
+      font-weight: bold;
+      color: #2d3748;
+      font-size: 28px;
+    }
+
+    .profile-details p {
+      color: #718096;
+      margin: 5px 0;
+      font-size: 16px;
+    }
+
+    .profile-badges {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+
+    .badge-item {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 6px 15px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .btn-share {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      font-weight: 600;
+      padding: 12px 30px;
+      border-radius: 25px;
+      border: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .btn-share:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+    }
+
+    /* Stats Overview */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .stat-box {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 25px;
+      text-align: center;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+
+    .stat-box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+      border-color: #667eea;
+    }
+
+    .stat-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin: 0 auto 15px;
+    }
+
+    .stat-icon.blue { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+    .stat-icon.green { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; }
+    .stat-icon.orange { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; }
+    .stat-icon.purple { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; }
+
+    .stat-box h3 {
+      color: #2d3748;
+      font-size: 32px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .stat-box p {
+      color: #718096;
+      font-size: 14px;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    /* Card Custom */
+    .card-custom {
+      border-radius: 25px;
+      padding: 30px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      height: 100%;
+      border: 2px solid transparent;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-custom::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .card-custom:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+      border-color: #667eea;
+    }
+
+    .card-custom h4 {
+      color: #2d3748;
+      font-weight: bold;
+      margin-bottom: 20px;
+      font-size: 22px;
+    }
+
+    .card-custom h4 i {
+      margin-right: 10px;
+    }
+
+    /* Academic Performance Styling */
+    .performance-summary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 20px;
+      border-radius: 15px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .performance-summary h2 {
+      font-size: 48px;
+      font-weight: bold;
+      margin: 0;
+    }
+
+    .performance-summary p {
+      margin: 5px 0 0 0;
+      font-size: 16px;
+      opacity: 0.9;
+    }
+
+    .rank-badge {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 8px 20px;
+      border-radius: 20px;
+      display: inline-block;
+      margin-top: 10px;
+      font-weight: 600;
+    }
+
+    /* Table Styling */
+    table {
+      border-radius: 15px;
+      overflow: hidden;
+      width: 100%;
+      background: white;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .table thead {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+
+    .table thead th {
+      border: none;
+      padding: 15px;
+      font-weight: 600;
+    }
+
+    .table tbody td {
+      padding: 12px 15px;
+      border-color: #f7fafc;
+      color: #2d3748;
+    }
+
+    .table tbody tr:hover {
+      background: #f7fafc;
+    }
+
+    /* Chart Container */
+    .chart-container {
+      position: relative;
+      height: 300px;
+      margin-bottom: 20px;
+    }
+
+    /* Rank List */
+    .rank-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .rank-list li {
+      padding: 15px;
+      background: #f7fafc;
+      margin-bottom: 10px;
+      border-radius: 12px;
+      font-weight: 500;
+      border-left: 4px solid #667eea;
+      transition: all 0.3s ease;
+      color: #2d3748;
+    }
+
+    .rank-list li:hover {
+      background: #edf2f7;
+      transform: translateX(5px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .rank-list li b {
+      color: #667eea;
+      font-weight: 700;
+    }
+
+    .rank-list li i {
+      margin-right: 10px;
+    }
+
+    /* Activities Section */
+    .activities-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .activity-badge {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 15px;
+      border-radius: 15px;
+      text-align: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .activity-badge:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+    }
+
+    .activity-badge h5 {
+      font-size: 28px;
+      font-weight: bold;
+      margin: 0 0 5px 0;
+    }
+
+    .activity-badge p {
+      margin: 0;
+      font-size: 13px;
+      opacity: 0.9;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .nav-content {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .profile-info {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .profile-header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .stats-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .activities-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Top Navigation -->
+  <nav class="top-nav">
+    <div class="nav-content">
+      <div class="logo">
+        <i class="fas fa-graduation-cap"></i> EduTrack Pro
+      </div>
+      <div class="nav-actions">
+        <button class="nav-btn secondary" onclick="window.location.href='student.html'">
+          <i class="fas fa-home"></i> Dashboard
+        </button>
+        <button class="nav-btn" onclick="alert('Edit profile feature')">
+          <i class="fas fa-edit"></i> Edit Profile
+        </button>
+        <button class="nav-btn secondary" onclick="window.location.href='login.html'">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="main-container">
+
+    <!-- Profile Header -->
+    <div class="profile-card">
+      <div class="profile-header">
+        <div class="profile-info">
+          <img src="studentprofileimg.jpg" class="profile-pic" alt="Profile Picture">
+          <div class="profile-details">
+            <h2>Lisa Parker</h2>
+            <p><i class="fas fa-graduation-cap"></i> B.Tech Computer Science Engineering</p>
+            <p><i class="fas fa-id-card"></i> Roll No: 245100140 | Batch: 2021-2025</p>
+            <div class="profile-badges">
+              <span class="badge-item"><i class="fas fa-star"></i> Top Performer</span>
+              <span class="badge-item"><i class="fas fa-award"></i> 12 Achievements</span>
+              <span class="badge-item"><i class="fas fa-chart-line"></i> Active Profile</span>
+            </div>
+          </div>
+        </div>
+        <button class="btn-share" onclick="shareProfile()">
+          <i class="fas fa-share-alt"></i> Share Profile
+        </button>
+      </div>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="stats-row">
+      <div class="stat-box">
+        <div class="stat-icon blue">
+          <i class="fas fa-percentage"></i>
+        </div>
+        <h3>86%</h3>
+        <p>Academic Average</p>
+      </div>
+
+      <div class="stat-box">
+        <div class="stat-icon green">
+          <i class="fas fa-trophy"></i>
+        </div>
+        <h3>5th</h3>
+        <p>Class Rank</p>
+      </div>
+
+      <div class="stat-box">
+        <div class="stat-icon orange">
+          <i class="fas fa-award"></i>
+        </div>
+        <h3>12</h3>
+        <p>Non-Academic Activities</p>
+      </div>
+
+      <div class="stat-box">
+        <div class="stat-icon purple">
+          <i class="fas fa-medal"></i>
+        </div>
+        <h3>5th</h3>
+        <p>Overall Rank</p>
+      </div>
+    </div>
+
+    <!-- Academic + Non-Academic -->
+    <div class="row g-4">
+      
+      <!-- Academic Performance -->
+      <div class="col-md-6">
+        <div class="card-custom">
+          <h4><i class="fas fa-book-open"></i> Academic Performance</h4>
+          
+          <div class="performance-summary">
+            <h2>86%</h2>
+            <p>Overall Percentage</p>
+            <div class="rank-badge">
+              <i class="fas fa-trophy"></i> Rank: 5 / 60 Students
+            </div>
+          </div>
+
+          <table class="table table-hover text-center">
+            <thead>
+              <tr>
+                <th><i class="fas fa-book"></i> Subject</th>
+                <th><i class="fas fa-chart-bar"></i> Marks</th>
+                <th><i class="fas fa-percentage"></i> Grade</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Mathematics</td>
+                <td><strong>88</strong></td>
+                <td><span style="color: #11998e; font-weight: 600;">A</span></td>
+              </tr>
+              <tr>
+                <td>Physics</td>
+                <td><strong>82</strong></td>
+                <td><span style="color: #11998e; font-weight: 600;">A</span></td>
+              </tr>
+              <tr>
+                <td>Chemistry</td>
+                <td><strong>84</strong></td>
+                <td><span style="color: #11998e; font-weight: 600;">A</span></td>
+              </tr>
+              <tr>
+                <td>Computer Science</td>
+                <td><strong>92</strong></td>
+                <td><span style="color: #11998e; font-weight: 600;">A+</span></td>
+              </tr>
+              <tr>
+                <td>English</td>
+                <td><strong>85</strong></td>
+                <td><span style="color: #11998e; font-weight: 600;">A</span></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="activities-grid mt-3">
+            <div class="activity-badge" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">
+              <h5><i class="fas fa-star"></i> A+</h5>
+              <p>Best Performance</p>
+            </div>
+            <div class="activity-badge" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+              <h5><i class="fas fa-chart-line"></i> 86%</h5>
+              <p>Average Score</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Non-Academic Achievements -->
+      <div class="col-md-6">
+        <div class="card-custom">
+          <h4><i class="fas fa-trophy"></i> Non-Academic Achievements</h4>
+          
+          <div class="chart-container">
+            <canvas id="nonAcademicChart"></canvas>
+          </div>
+
+          <h5 style="color: #2d3748; font-weight: bold; margin-top: 20px; margin-bottom: 15px;">
+            <i class="fas fa-medal"></i> Overall Ranking
+          </h5>
+          <ul class="rank-list">
+            <li><i class="fas fa-trophy" style="color: #FFD700;"></i> 1. Rohan Sharma</li>
+            <li><i class="fas fa-trophy" style="color: #C0C0C0;"></i> 2. Priya Patel</li>
+            <li><i class="fas fa-trophy" style="color: #CD7F32;"></i> 3. Arjun Singh</li>
+            <li><i class="fas fa-star" style="color: #667eea;"></i> 4. Neha Verma</li>
+            <li><b><i class="fas fa-user" style="color: #667eea;"></i> 5. You (Lisa Parker)</b></li>
+          </ul>
+
+          <div class="activities-grid mt-3">
+            <div class="activity-badge">
+              <h5>3</h5>
+              <p>Workshops</p>
+            </div>
+            <div class="activity-badge" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">
+              <h5>2</h5>
+              <p>Certifications</p>
+            </div>
+            <div class="activity-badge" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+              <h5>4</h5>
+              <p>Competitions</p>
+            </div>
+            <div class="activity-badge" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+              <h5>3</h5>
+              <p>Leadership</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Non-Academic Radar Chart
+    const ctx = document.getElementById('nonAcademicChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'radar',
+      data: {
+        labels: [
+          "Workshops",
+          "Certifications",
+          "Volunteering",
+          "Competitions",
+          "Leadership",
+          "Community"
+        ],
+        datasets: [{
+          label: "Performance Score",
+          data: [80, 65, 70, 60, 75, 85],
+          backgroundColor: "rgba(102, 126, 234, 0.2)",
+          borderColor: "#667eea",
+          pointBackgroundColor: "#667eea",
+          pointBorderColor: "#fff",
+          pointHoverBackgroundColor: "#fff",
+          pointHoverBorderColor: "#667eea",
+          borderWidth: 3,
+          pointRadius: 5,
+          pointHoverRadius: 7
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { 
+          legend: { 
+            display: true,
+            position: 'bottom',
+            labels: {
+              padding: 15,
+              font: {
+                size: 13,
+                weight: '600'
+              },
+              usePointStyle: true
+            }
+          },
+          tooltip: {
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            padding: 12,
+            titleFont: {
+              size: 14,
+              weight: 'bold'
+            },
+            bodyFont: {
+              size: 13
+            },
+            cornerRadius: 8
+          }
+        },
+        scales: {
+          r: {
+            angleLines: { 
+              color: "#e2e8f0",
+              lineWidth: 2
+            },
+            grid: {
+              color: "#e2e8f0",
+              lineWidth: 2
+            },
+            pointLabels: {
+              font: {
+                size: 12,
+                weight: '600'
+              },
+              color: '#2d3748'
+            },
+            suggestedMin: 0,
+            suggestedMax: 100,
+            ticks: { 
+              stepSize: 20,
+              backdropColor: 'transparent',
+              color: '#718096',
+              font: {
+                size: 11
+              }
+            }
+          }
+        }
+      }
+    });
+
+    // Share Profile Function
+    function shareProfile() {
+      const profileUrl = window.location.href;
+      const shareText = "Check out Lisa Parker's academic profile on EduTrack Pro!";
+      
+      if (navigator.share) {
+        navigator.share({
+          title: 'Student Profile - Lisa Parker',
+          text: shareText,
+          url: profileUrl
+        }).catch(err => console.log('Error sharing:', err));
+      } else {
+        // Fallback: Copy to clipboard
+        navigator.clipboard.writeText(profileUrl).then(() => {
+          alert('✅ Profile link copied to clipboard!\n\n' + profileUrl);
+        }).catch(() => {
+          alert('Profile URL: ' + profileUrl);
+        });
+      }
+    }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Submit Activity - EduTrack Pro</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
+      padding-bottom: 40px;
+    }
+
+    /* Top Navigation Bar */
+    .top-nav {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 15px 0;
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .nav-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 30px;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .nav-btn {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .nav-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+    }
+
+    .nav-btn.secondary {
+      background: white;
+      color: #667eea;
+      border: 2px solid #667eea;
+      box-shadow: none;
+    }
+
+    .nav-btn.secondary:hover {
+      background: #f8f9ff;
+    }
+
+    /* Main Container */
+    .main-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 30px;
+    }
+
+    /* Page Header */
+    .page-header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 25px;
+      padding: 40px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .page-header h2 {
+      color: #2d3748;
+      font-weight: bold;
+      margin-bottom: 10px;
+      font-size: 32px;
+    }
+
+    .page-header p {
+      color: #718096;
+      font-size: 16px;
+      margin-bottom: 0;
+    }
+
+    .page-header i {
+      font-size: 60px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 15px;
+    }
+
+    /* Progress Steps */
+    .progress-steps {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    .progress-steps::before {
+      content: '';
+      position: absolute;
+      top: 20px;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.3);
+      z-index: 0;
+    }
+
+    .step {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: #718096;
+      position: relative;
+      z-index: 1;
+      border: 3px solid rgba(255, 255, 255, 0.5);
+      transition: all 0.3s ease;
+    }
+
+    .step.active {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border-color: white;
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+      transform: scale(1.1);
+    }
+
+    .step.completed {
+      background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+      color: white;
+      border-color: white;
+    }
+
+    /* Form Card */
+    .form-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 25px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+      padding: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .form-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    /* Form Elements */
+    .form-label {
+      color: #2d3748;
+      font-weight: 600;
+      margin-bottom: 10px;
+      font-size: 15px;
+    }
+
+    .form-label i {
+      margin-right: 8px;
+      color: #667eea;
+    }
+
+    .form-control, .form-select {
+      padding: 12px 18px;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      font-size: 15px;
+      transition: all 0.3s ease;
+      background: white;
+    }
+
+    .form-control:focus, .form-select:focus {
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      outline: none;
+    }
+
+    .form-control::placeholder {
+      color: #a0aec0;
+    }
+
+    /* Category Cards */
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .category-card {
+      background: #f7fafc;
+      border: 2px solid #e2e8f0;
+      border-radius: 15px;
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .category-card:hover {
+      background: #edf2f7;
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .category-card.selected {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border-color: transparent;
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    }
+
+    .category-card i {
+      font-size: 32px;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .category-card h6 {
+      margin: 0;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    /* File Upload */
+    .file-upload-wrapper {
+      position: relative;
+      border: 2px dashed #e2e8f0;
+      border-radius: 15px;
+      padding: 40px;
+      text-align: center;
+      background: #f7fafc;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .file-upload-wrapper:hover {
+      border-color: #667eea;
+      background: #edf2f7;
+    }
+
+    .file-upload-wrapper.active {
+      border-color: #667eea;
+      background: rgba(102, 126, 234, 0.05);
+    }
+
+    .file-upload-wrapper i {
+      font-size: 48px;
+      color: #667eea;
+      margin-bottom: 15px;
+    }
+
+    .file-upload-wrapper input[type="file"] {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .file-info {
+      display: none;
+      margin-top: 15px;
+      padding: 15px;
+      background: white;
+      border-radius: 12px;
+      border: 2px solid #11998e;
+    }
+
+    .file-info.show {
+      display: block;
+    }
+
+    /* Buttons */
+    .btn-submit {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 15px;
+      padding: 15px 40px;
+      font-weight: 600;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+      width: 100%;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+    }
+
+    .btn-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-secondary-custom {
+      background: white;
+      color: #667eea;
+      border: 2px solid #667eea;
+      border-radius: 15px;
+      padding: 15px 40px;
+      font-weight: 600;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+
+    .btn-secondary-custom:hover {
+      background: #f8f9ff;
+      transform: translateY(-2px);
+    }
+
+    /* Tips Card */
+    .tips-card {
+      background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
+      color: white;
+      border-radius: 20px;
+      padding: 25px;
+      margin-top: 30px;
+    }
+
+    .tips-card h5 {
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    .tips-card ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .tips-card li {
+      margin-bottom: 8px;
+      opacity: 0.95;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .nav-content {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .main-container {
+        padding: 20px;
+      }
+
+      .form-card {
+        padding: 25px;
+      }
+
+      .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .progress-steps {
+        justify-content: space-around;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Top Navigation -->
+  <nav class="top-nav">
+    <div class="nav-content">
+      <div class="logo">
+        <i class="fas fa-graduation-cap"></i> EduTrack Pro
+      </div>
+      <div class="nav-actions">
+        <button class="nav-btn secondary" onclick="window.location.href='student.html'">
+          <i class="fas fa-home"></i> Dashboard
+        </button>
+        <button class="nav-btn secondary" onclick="window.location.href='student_profile.html'">
+          <i class="fas fa-user"></i> Profile
+        </button>
+        <button class="nav-btn secondary" onclick="window.location.href='login.html'">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="main-container">
+    
+    <!-- Page Header -->
+    <div class="page-header">
+      <i class="fas fa-upload"></i>
+      <h2>Submit New Activity</h2>
+      <p>Upload your achievements and certifications for coordinator review</p>
+    </div>
+
+    <!-- Progress Steps -->
+    <div class="progress-steps">
+      <div class="step active" title="Fill Details">1</div>
+      <div class="step" title="Select Category">2</div>
+      <div class="step" title="Upload Files">3</div>
+      <div class="step" title="Submit">4</div>
+    </div>
+    
+    <!-- Form Card -->
+    <div class="form-card">
+      <form id="activityForm" onsubmit="handleSubmit(event)">
+        <!-- Activity Title -->
+        <div class="mb-4">
+          <label for="title" class="form-label">
+            <i class="fas fa-heading"></i> Activity Title *
+          </label>
+          <input 
+            type="text" 
+            class="form-control" 
+            id="title" 
+            placeholder="e.g., AWS Cloud Practitioner Certification" 
+            required
+            oninput="updateProgress()">
+        </div>
+
+        <!-- Category Selection -->
+        <div class="mb-4">
+          <label class="form-label">
+            <i class="fas fa-tags"></i> Select Category *
+          </label>
+          <div class="category-grid">
+            <div class="category-card" onclick="selectCategory(this, 'Workshops')">
+              <i class="fas fa-chalkboard-teacher"></i>
+              <h6>Workshops & Conferences</h6>
+            </div>
+            <div class="category-card" onclick="selectCategory(this, 'Certifications')">
+              <i class="fas fa-certificate"></i>
+              <h6>Certifications</h6>
+            </div>
+            <div class="category-card" onclick="selectCategory(this, 'Volunteering')">
+              <i class="fas fa-hands-helping"></i>
+              <h6>Volunteering</h6>
+            </div>
+            <div class="category-card" onclick="selectCategory(this, 'Competitions')">
+              <i class="fas fa-trophy"></i>
+              <h6>Competitions</h6>
+            </div>
+            <div class="category-card" onclick="selectCategory(this, 'Leadership')">
+              <i class="fas fa-user-tie"></i>
+              <h6>Leadership & Internships</h6>
+            </div>
+            <div class="category-card" onclick="selectCategory(this, 'Community')">
+              <i class="fas fa-heart"></i>
+              <h6>Community Service</h6>
+            </div>
+          </div>
+          <input type="hidden" id="category" required>
+        </div>
+
+        <!-- Date -->
+        <div class="mb-4">
+          <label for="activityDate" class="form-label">
+            <i class="fas fa-calendar"></i> Activity Date *
+          </label>
+          <input 
+            type="date" 
+            class="form-control" 
+            id="activityDate" 
+            required
+            oninput="updateProgress()">
+        </div>
+
+        <!-- Description -->
+        <div class="mb-4">
+          <label for="description" class="form-label">
+            <i class="fas fa-align-left"></i> Description *
+          </label>
+          <textarea 
+            class="form-control" 
+            id="description" 
+            rows="5" 
+            placeholder="Provide detailed information about your activity, what you learned, achievements, etc." 
+            required
+            oninput="updateProgress()"></textarea>
+          <small class="text-muted">Minimum 50 characters</small>
+        </div>
+
+        <!-- File Upload -->
+        <div class="mb-4">
+          <label class="form-label">
+            <i class="fas fa-paperclip"></i> Upload Proof/Certificate *
+          </label>
+          <div class="file-upload-wrapper" id="fileUploadWrapper">
+            <i class="fas fa-cloud-upload-alt"></i>
+            <h5>Drag & Drop or Click to Upload</h5>
+            <p class="text-muted mb-0">Supported formats: PDF, JPG, PNG (Max 5MB)</p>
+            <input type="file" id="file" accept=".pdf,.jpg,.jpeg,.png" required onchange="handleFileSelect(event)">
+          </div>
+          <div class="file-info" id="fileInfo">
+            <i class="fas fa-check-circle" style="color: #11998e; margin-right: 10px;"></i>
+            <strong id="fileName"></strong>
+            <span id="fileSize" class="text-muted" style="margin-left: 10px;"></span>
+          </div>
+        </div>
+
+        <!-- Additional Notes -->
+        <div class="mb-4">
+          <label for="notes" class="form-label">
+            <i class="fas fa-sticky-note"></i> Additional Notes (Optional)
+          </label>
+          <textarea 
+            class="form-control" 
+            id="notes" 
+            rows="3" 
+            placeholder="Any additional information you'd like to share..."></textarea>
+        </div>
+
+        <!-- Submit Buttons -->
+        <div class="mt-4">
+          <button type="button" class="btn-secondary-custom" onclick="saveDraft()">
+            <i class="fas fa-save"></i> Save as Draft
+          </button>
+          <button type="submit" class="btn-submit" id="submitBtn" disabled>
+            <i class="fas fa-paper-plane"></i> Submit for Review
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Tips Card -->
+    <div class="tips-card">
+      <h5><i class="fas fa-lightbulb"></i> Submission Tips</h5>
+      <ul>
+        <li>Ensure your certificate/proof is clear and readable</li>
+        <li>Provide accurate dates and detailed descriptions</li>
+        <li>Upload official documents only (no screenshots)</li>
+        <li>Your submission will be reviewed by your coordinator within 2-3 business days</li>
+        <li>You'll receive a notification once the review is complete</li>
+      </ul>
+    </div>
+    
+  </div>
+
+  <script>
+    let selectedCategory = '';
+
+    // Select category
+    function selectCategory(element, category) {
+      // Remove selection from all cards
+      document.querySelectorAll('.category-card').forEach(card => {
+        card.classList.remove('selected');
+      });
+      
+      // Add selection to clicked card
+      element.classList.add('selected');
+      selectedCategory = category;
+      document.getElementById('category').value = category;
+      
+      // Update progress
+      updateProgress();
+    }
+
+    // Handle file selection
+    function handleFileSelect(event) {
+      const file = event.target.files[0];
+      if (file) {
+        // Check file size (5MB max)
+        if (file.size > 5 * 1024 * 1024) {
+          alert('File size exceeds 5MB. Please upload a smaller file.');
+          event.target.value = '';
+          return;
+        }
+
+        // Show file info
+        document.getElementById('fileName').textContent = file.name;
+        document.getElementById('fileSize').textContent = `(${(file.size / 1024).toFixed(2)} KB)`;
+        document.getElementById('fileInfo').classList.add('show');
+        document.getElementById('fileUploadWrapper').classList.add('active');
+        
+        // Update progress
+        updateProgress();
+      }
+    }
+
+    // Drag and drop functionality
+    const fileUploadWrapper = document.getElementById('fileUploadWrapper');
+    
+    fileUploadWrapper.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      fileUploadWrapper.style.borderColor = '#667eea';
+      fileUploadWrapper.style.background = 'rgba(102, 126, 234, 0.1)';
+    });
+
+    fileUploadWrapper.addEventListener('dragleave', (e) => {
+      e.preventDefault();
+      fileUploadWrapper.style.borderColor = '#e2e8f0';
+      fileUploadWrapper.style.background = '#f7fafc';
+    });
+
+    fileUploadWrapper.addEventListener('drop', (e) => {
+      e.preventDefault();
+      const file = e.dataTransfer.files[0];
+      document.getElementById('file').files = e.dataTransfer.files;
+      handleFileSelect({target: {files: [file]}});
+    });
+
+    // Update progress steps
+    function updateProgress() {
+      const title = document.getElementById('title').value;
+      const category = document.getElementById('category').value;
+      const date = document.getElementById('activityDate').value;
+      const description = document.getElementById('description').value;
+      const file = document.getElementById('file').files.length > 0;
+
+      const steps = document.querySelectorAll('.step');
+      
+      // Step 1: Basic info
+      if (title && date) {
+        steps[0].classList.add('completed');
+        steps[1].classList.add('active');
+      }
+      
+      // Step 2: Category
+      if (category) {
+        steps[1].classList.add('completed');
+        steps[2].classList.add('active');
+      }
+      
+      // Step 3: File
+      if (file) {
+        steps[2].classList.add('completed');
+        steps[3].classList.add('active');
+      }
+
+      // Enable submit button if all required fields are filled
+      const submitBtn = document.getElementById('submitBtn');
+      if (title && category && date && description.length >= 50 && file) {
+        submitBtn.disabled = false;
+      } else {
+        submitBtn.disabled = true;
+      }
+    }
+
+    // Save as draft
+    function saveDraft() {
+      const formData = {
+        title: document.getElementById('title').value,
+        category: selectedCategory,
+        date: document.getElementById('activityDate').value,
+        description: document.getElementById('description').value,
+        notes: document.getElementById('notes').value,
+        savedAt: new Date().toISOString()
+      };
+      
+      localStorage.setItem('activityDraft', JSON.stringify(formData));
+      alert('✅ Draft saved successfully!\n\nYou can continue editing later.');
+    }
+
+    // Handle form submission
+    function handleSubmit(event) {
+      event.preventDefault();
+      
+      const formData = {
+        title: document.getElementById('title').value,
+        category: selectedCategory,
+        date: document.getElementById('activityDate').value,
+        description: document.getElementById('description').value,
+        notes: document.getElementById('notes').value,
+        fileName: document.getElementById('fileName').textContent,
+        submittedAt: new Date().toISOString()
+      };
+
+      // Simulate submission
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+      submitBtn.disabled = true;
+
+      setTimeout(() => {
+        // Clear draft
+        localStorage.removeItem('activityDraft');
+        
+        // Show success message
+        alert('✅ Activity Submitted Successfully!\n\n' +
+              'Your activity has been sent to your coordinator for review.\n\n' +
+              'Activity: ' + formData.title + '\n' +
+              'Category: ' + formData.category + '\n\n' +
+              'You will receive a notification once the review is complete.');
+        
+        // Redirect to dashboard
+        window.location.href = 'student.html';
+      }, 2000);
+    }
+
+    // Load draft on page load
+    window.onload = function() {
+      const draft = localStorage.getItem('activityDraft');
+      if (draft && confirm('You have a saved draft. Would you like to continue editing?')) {
+        const data = JSON.parse(draft);
+        document.getElementById('title').value = data.title || '';
+        document.getElementById('activityDate').value = data.date || '';
+        document.getElementById('description').value = data.description || '';
+        document.getElementById('notes').value = data.notes || '';
+        
+        if (data.category) {
+          // Find and select the category card
+          const categoryCards = document.querySelectorAll('.category-card');
+          categoryCards.forEach(card => {
+            if (card.querySelector('h6').textContent.includes(data.category)) {
+              selectCategory(card, data.category);
+            }
+          });
+        }
+      }
+    };
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

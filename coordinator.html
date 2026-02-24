@@ -1,672 +1,780 @@
 <!-- coordinator.html -->
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coordinator Dashboard - EduTrack Pro</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coordinator Dashboard - EduTrack Pro</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-    body {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      min-height: 100vh;
-      padding-bottom: 40px;
-    }
+      body {
+        background: linear-gradient(
+          180deg,
+          #e0e7ff 0%,
+          #f8fafc 30%,
+          #f0fdfa 100%
+        );
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        min-height: 100vh;
+        padding-bottom: 40px;
+      }
 
-    /* Top Navigation Bar */
-    .top-nav {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      padding: 15px 0;
-      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
+      /* Top Navigation Bar */
+      .top-nav {
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.95) 0%,
+          rgba(248, 250, 252, 0.95) 100%
+        );
+        backdrop-filter: blur(10px);
+        padding: 12px 0;
+        box-shadow: 0 2px 12px rgba(99, 102, 241, 0.08);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        border-bottom: 1px solid rgba(99, 102, 241, 0.1);
+      }
 
-    .nav-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 0 30px;
-    }
-
-    .logo {
-      font-size: 24px;
-      font-weight: bold;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .nav-actions {
-      display: flex;
-      gap: 15px;
-      align-items: center;
-    }
-
-    .nav-btn {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 25px;
-      cursor: pointer;
-      font-size: 14px;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-    }
-
-    .nav-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
-    }
-
-    .nav-btn.secondary {
-      background: white;
-      color: #667eea;
-      border: 2px solid #667eea;
-      box-shadow: none;
-    }
-
-    .nav-btn.secondary:hover {
-      background: #f8f9ff;
-    }
-
-    /* Dashboard Header */
-    .dashboard-header {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      border-radius: 25px;
-      padding: 30px;
-      margin: 30px auto;
-      max-width: 1400px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-    }
-
-    .coordinator-profile {
-      display: flex;
-      align-items: center;
-      gap: 25px;
-    }
-
-    .coordinator-avatar {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 40px;
-      color: white;
-      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
-    }
-
-    .coordinator-info h2 {
-      font-weight: bold;
-      color: #2d3748;
-      margin-bottom: 5px;
-    }
-
-    .coordinator-info p {
-      color: #718096;
-      margin-bottom: 10px;
-    }
-
-    .coordinator-badges {
-      display: flex;
-      gap: 10px;
-      margin-top: 10px;
-      flex-wrap: wrap;
-    }
-
-    .badge-item {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      padding: 5px 15px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 600;
-    }
-
-    /* Quick Stats */
-    .stats-overview {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 20px;
-      margin: 30px auto;
-      max-width: 1400px;
-    }
-
-    .stat-card {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      border-radius: 20px;
-      padding: 25px;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-      transition: all 0.3s ease;
-      border: 2px solid transparent;
-    }
-
-    .stat-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
-      border-color: #667eea;
-    }
-
-    .stat-icon {
-      width: 50px;
-      height: 50px;
-      border-radius: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      margin-bottom: 15px;
-    }
-
-    .stat-icon.blue { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
-    .stat-icon.green { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; }
-    .stat-icon.orange { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; }
-    .stat-icon.purple { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; }
-
-    .stat-card h4 {
-      color: #718096;
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
-
-    .stat-card h2 {
-      color: #2d3748;
-      font-size: 32px;
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
-
-    .stat-trend {
-      color: #48bb78;
-      font-size: 13px;
-      font-weight: 600;
-    }
-
-    /* Search Section */
-    .search-container {
-      max-width: 1400px;
-      margin: 30px auto;
-      padding: 0 30px;
-    }
-
-    .search-card {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      border-radius: 25px;
-      padding: 30px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-    }
-
-    .search-box {
-      display: flex;
-      gap: 15px;
-    }
-
-    .search-input {
-      flex: 1;
-      padding: 15px 20px;
-      border: 2px solid #e2e8f0;
-      border-radius: 15px;
-      font-size: 16px;
-      outline: none;
-      transition: all 0.3s ease;
-    }
-
-    .search-input:focus {
-      border-color: #667eea;
-      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-    }
-
-    .search-btn {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      border: none;
-      padding: 15px 35px;
-      border-radius: 15px;
-      cursor: pointer;
-      font-size: 16px;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-    }
-
-    .search-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
-    }
-
-    /* Main Content */
-    .main-content {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 0 30px;
-    }
-
-    .section-header {
-      color: white;
-      text-align: center;
-      margin: 40px 0 30px;
-    }
-
-    .section-header h2 {
-      font-weight: bold;
-      font-size: 32px;
-      margin-bottom: 10px;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-    }
-
-    .section-header p {
-      font-size: 16px;
-      opacity: 0.9;
-    }
-
-    /* Dashboard Grid */
-    .dashboard-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-      gap: 25px;
-      margin-bottom: 30px;
-    }
-
-    .dashboard-card {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      border-radius: 25px;
-      padding: 30px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-      transition: all 0.3s ease;
-      border: 2px solid transparent;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .dashboard-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 5px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      transform: scaleX(0);
-      transition: transform 0.3s ease;
-    }
-
-    .dashboard-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
-      border-color: #667eea;
-    }
-
-    .dashboard-card:hover::before {
-      transform: scaleX(1);
-    }
-
-    .card-header-custom {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      margin-bottom: 20px;
-      padding-bottom: 15px;
-      border-bottom: 2px solid #f7fafc;
-    }
-
-    .card-icon-large {
-      width: 60px;
-      height: 60px;
-      border-radius: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 28px;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-    }
-
-    .card-icon-large.blue { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
-    .card-icon-large.green { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; }
-    .card-icon-large.orange { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; }
-
-    .card-title h3 {
-      color: #2d3748;
-      font-size: 20px;
-      font-weight: bold;
-      margin: 0;
-    }
-
-    .card-title p {
-      color: #718096;
-      font-size: 13px;
-      margin: 5px 0 0 0;
-    }
-
-    .activity-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .activity-item {
-      padding: 15px;
-      margin-bottom: 10px;
-      background: #f7fafc;
-      border-radius: 12px;
-      border-left: 4px solid #667eea;
-      transition: all 0.3s ease;
-      cursor: pointer;
-    }
-
-    .activity-item:hover {
-      background: #edf2f7;
-      transform: translateX(5px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    }
-
-    .activity-item strong {
-      color: #2d3748;
-      font-weight: 600;
-    }
-
-    .activity-item span {
-      color: #718096;
-      font-size: 13px;
-      display: block;
-      margin-top: 5px;
-    }
-
-    .view-all-btn {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      border: none;
-      padding: 12px 25px;
-      border-radius: 12px;
-      cursor: pointer;
-      font-size: 14px;
-      font-weight: 600;
-      width: 100%;
-      margin-top: 15px;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-    }
-
-    .view-all-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
-    }
-
-    /* Responsive Design */
-    @media (max-width: 768px) {
       .nav-content {
-        flex-direction: column;
-        gap: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+
+      .logo {
+        font-size: 20px;
+        font-weight: 700;
+        background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .nav-actions {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+
+      .nav-btn {
+        background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+      }
+
+      .nav-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+      }
+
+      .nav-btn.secondary {
+        background: white;
+        color: #374151;
+        border: 1px solid #d1d5db;
+      }
+
+      .nav-btn.secondary:hover {
+        background: #f9fafb;
+        border-color: #9ca3af;
+      }
+
+      /* Dashboard Header */
+      .dashboard-header {
+        background: linear-gradient(135deg, #ffffff 0%, #faf5ff 100%);
+        border-radius: 16px;
+        padding: 24px;
+        margin: 24px auto;
+        max-width: 1400px;
+        box-shadow: 0 4px 20px rgba(99, 102, 241, 0.1);
+        border: 1px solid rgba(139, 92, 246, 0.15);
       }
 
       .coordinator-profile {
-        flex-direction: column;
-        text-align: center;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .coordinator-avatar {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: #2563eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 32px;
+        color: white;
+      }
+
+      .coordinator-info h2 {
+        font-weight: 600;
+        color: #1e293b;
+        margin-bottom: 4px;
+        font-size: 20px;
+      }
+
+      .coordinator-info p {
+        color: #64748b;
+        margin-bottom: 8px;
+        font-size: 14px;
       }
 
       .coordinator-badges {
-        justify-content: center;
+        display: flex;
+        gap: 8px;
+        margin-top: 8px;
+        flex-wrap: wrap;
       }
 
+      .badge-item {
+        background: #eff6ff;
+        color: #2563eb;
+        padding: 4px 12px;
+        border-radius: 16px;
+        font-size: 12px;
+        font-weight: 500;
+        border: 1px solid #bfdbfe;
+      }
+
+      /* Quick Stats */
       .stats-overview {
-        grid-template-columns: 1fr;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+        margin: 24px auto;
+        max-width: 1400px;
       }
 
-      .dashboard-grid {
-        grid-template-columns: 1fr;
+      .stat-card {
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+        border: 1px solid #e2e8f0;
+        transition: all 0.3s ease;
+      }
+
+      .stat-card:hover {
+        border-color: #8b5cf6;
+        box-shadow: 0 4px 20px rgba(139, 92, 246, 0.15);
+        transform: translateY(-2px);
+      }
+
+      .stat-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        margin-bottom: 12px;
+      }
+
+      .stat-icon.blue {
+        background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+        color: #4f46e5;
+      }
+      .stat-icon.green {
+        background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+        color: #059669;
+      }
+      .stat-icon.orange {
+        background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+        color: #d97706;
+      }
+      .stat-icon.purple {
+        background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%);
+        color: #7c3aed;
+      }
+
+      .stat-card h4 {
+        color: #64748b;
+        font-size: 13px;
+        font-weight: 500;
+        margin-bottom: 6px;
+      }
+
+      .stat-card h2 {
+        color: #1e293b;
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 4px;
+      }
+
+      .stat-trend {
+        color: #059669;
+        font-size: 12px;
+        font-weight: 500;
+      }
+
+      /* Search Section */
+      .search-container {
+        max-width: 1400px;
+        margin: 24px auto;
+        padding: 0 24px;
+      }
+
+      .search-card {
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+        border: 1px solid #e2e8f0;
       }
 
       .search-box {
-        flex-direction: column;
+        display: flex;
+        gap: 12px;
       }
-    }
-  </style>
-</head>
-<body>
-  <!-- Top Navigation -->
-  <nav class="top-nav">
-    <div class="nav-content">
-      <div class="logo">
-        <i class="fas fa-graduation-cap"></i> EduTrack Pro
-      </div>
-      <div class="nav-actions">
-        <button class="nav-btn" onclick="window.location.href='coordinator_approaval.html'">
-          <i class="fas fa-tasks"></i> Pending (23)
-        </button>
-        <button class="nav-btn secondary" onclick="alert('Notifications: 12 new activities submitted')">
-          <i class="fas fa-bell"></i> Notifications
-        </button>
-        <button class="nav-btn secondary" onclick="window.location.href='index.html'">
-          <i class="fas fa-sign-out-alt"></i> Logout
-        </button>
-      </div>
-    </div>
-  </nav>
 
-  <!-- Dashboard Header -->
-  <div class="dashboard-header">
-    <div class="coordinator-profile">
-      <div class="coordinator-avatar">
-        <i class="fas fa-user-tie"></i>
-      </div>
-      <div class="coordinator-info">
-        <h2>Prof. Coordinator Name</h2>
-        <p><i class="fas fa-envelope"></i> coordinator@edutrack.edu | <i class="fas fa-phone"></i> +91 98765 43210</p>
-        <div class="coordinator-badges">
-          <span class="badge-item"><i class="fas fa-users"></i> Managing 45 Students</span>
-          <span class="badge-item"><i class="fas fa-certificate"></i> Computer Science Dept</span>
-          <span class="badge-item"><i class="fas fa-check-circle"></i> Verified Coordinator</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Quick Stats -->
-  <div class="stats-overview">
-    <div class="stat-card">
-      <div class="stat-icon blue">
-        <i class="fas fa-users"></i>
-      </div>
-      <h4>Assigned Students</h4>
-      <h2>45</h2>
-      <span class="stat-trend"><i class="fas fa-arrow-up"></i> +5 this month</span>
-    </div>
-
-    <div class="stat-card">
-      <div class="stat-icon orange">
-        <i class="fas fa-clock"></i>
-      </div>
-      <h4>Pending Approvals</h4>
-      <h2>23</h2>
-      <span class="stat-trend"><i class="fas fa-exclamation-circle"></i> Needs attention</span>
-    </div>
-
-    <div class="stat-card">
-      <div class="stat-icon green">
-        <i class="fas fa-check-circle"></i>
-      </div>
-      <h4>Approved This Week</h4>
-      <h2>67</h2>
-      <span class="stat-trend"><i class="fas fa-arrow-up"></i> +15% from last week</span>
-    </div>
-
-    <div class="stat-card">
-      <div class="stat-icon purple">
-        <i class="fas fa-trophy"></i>
-      </div>
-      <h4>Total Activities</h4>
-      <h2>234</h2>
-      <span class="stat-trend"><i class="fas fa-chart-line"></i> Growing steadily</span>
-    </div>
-  </div>
-
-  <!-- Search Section -->
-  <div class="search-container">
-    <div class="search-card">
-      <div class="search-box">
-        <input type="text" class="search-input" id="searchInput" placeholder="🔍 Search students, activities, or requests...">
-        <button class="search-btn" onclick="performSearch()">
-          <i class="fas fa-search"></i> Search
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Main Content -->
-  <div class="main-content">
-    <!-- Section Header -->
-    <div class="section-header">
-      <h2>📊 Dashboard Overview</h2>
-      <p>Monitor student activities and manage approval requests</p>
-    </div>
-
-    <!-- Dashboard Grid -->
-    <div class="dashboard-grid">
-      <!-- Recent Activity Card -->
-      <div class="dashboard-card">
-        <div class="card-header-custom">
-          <div class="card-icon-large blue">
-            <i class="fas fa-history"></i>
-          </div>
-          <div class="card-title">
-            <h3>Recent Activity</h3>
-            <p>Latest student submissions</p>
-          </div>
-        </div>
-        <ul class="activity-list">
-          <li class="activity-item" onclick="alert('View Lisa Parker submission details')">
-            <strong><i class="fas fa-user"></i> Lisa Parker</strong>
-            <span>Submitted AI Workshop Certificate - 2 hours ago</span>
-          </li>
-          <li class="activity-item" onclick="alert('View Priya Patel submission details')">
-            <strong><i class="fas fa-user"></i> Priya Patel</strong>
-            <span>AWS Certification uploaded - 5 hours ago</span>
-          </li>
-          <li class="activity-item" onclick="alert('View Arya Singh submission details')">
-            <strong><i class="fas fa-user"></i> Arya Singh</strong>
-            <span>Competition Winner Certificate - 8 hours ago</span>
-          </li>
-          <li class="activity-item" onclick="alert('View Raj Kumar submission details')">
-            <strong><i class="fas fa-user"></i> Raj Kumar</strong>
-            <span>Updated profile information - 1 day ago</span>
-          </li>
-        </ul>
-        <button class="view-all-btn" onclick="alert('Viewing all recent activities...')">
-          <i class="fas fa-list"></i> View All Activities
-        </button>
-      </div>
-
-      <!-- Pending Requests Card -->
-      <div class="dashboard-card">
-        <div class="card-header-custom">
-          <div class="card-icon-large orange">
-            <i class="fas fa-tasks"></i>
-          </div>
-          <div class="card-title">
-            <h3>Pending Requests</h3>
-            <p>Awaiting your approval</p>
-          </div>
-        </div>
-        <ul class="activity-list">
-          <li class="activity-item" onclick="window.location.href='coordinator_approaval.html'">
-            <strong><i class="fas fa-certificate"></i> Certificate Approval</strong>
-            <span>Lisa Parker - Workshop Participation</span>
-          </li>
-          <li class="activity-item" onclick="window.location.href='coordinator_approaval.html'">
-            <strong><i class="fas fa-award"></i> Certification Verification</strong>
-            <span>Priya Patel - AWS Cloud Practitioner</span>
-          </li>
-          <li class="activity-item" onclick="window.location.href='coordinator_approaval.html'">
-            <strong><i class="fas fa-trophy"></i> Competition Achievement</strong>
-            <span>Arya Singh - National Coding Contest</span>
-          </li>
-          <li class="activity-item" onclick="window.location.href='coordinator_approaval.html'">
-            <strong><i class="fas fa-project-diagram"></i> Project Submission</strong>
-            <span>Rohit Sharma - Final Year Project</span>
-          </li>
-        </ul>
-        <button class="view-all-btn" onclick="window.location.href='coordinator_approaval.html'">
-          <i class="fas fa-check-double"></i> Review All Requests (23)
-        </button>
-      </div>
-
-      <!-- Student Management Card -->
-      <div class="dashboard-card">
-        <div class="card-header-custom">
-          <div class="card-icon-large green">
-            <i class="fas fa-user-graduate"></i>
-          </div>
-          <div class="card-title">
-            <h3>Student Management</h3>
-            <p>Manage assigned students</p>
-          </div>
-        </div>
-        <ul class="activity-list">
-          <li class="activity-item" onclick="alert('View all assigned students')">
-            <strong><i class="fas fa-users"></i> View All Students</strong>
-            <span>45 students assigned to you</span>
-          </li>
-          <li class="activity-item" onclick="alert('Search student profiles')">
-            <strong><i class="fas fa-search"></i> Search Students</strong>
-            <span>Find and view student profiles</span>
-          </li>
-          <li class="activity-item" onclick="alert('View student analytics')">
-            <strong><i class="fas fa-chart-bar"></i> Student Analytics</strong>
-            <span>View performance and engagement</span>
-          </li>
-          <li class="activity-item" onclick="alert('Export student reports')">
-            <strong><i class="fas fa-file-export"></i> Export Reports</strong>
-            <span>Download student activity reports</span>
-          </li>
-        </ul>
-        <button class="view-all-btn" onclick="alert('Opening student management panel...')">
-          <i class="fas fa-cog"></i> Manage Students
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    // Search functionality
-    function performSearch() {
-      const searchTerm = document.getElementById('searchInput').value;
-      if (searchTerm.trim() === '') {
-        alert('Please enter a search term');
-        return;
+      .search-input {
+        flex: 1;
+        padding: 12px 16px;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        font-size: 14px;
+        outline: none;
+        transition:
+          border-color 0.2s ease,
+          box-shadow 0.2s ease;
       }
-      alert(`Searching for: ${searchTerm}\n\nThis will display matching students and activities.`);
-    }
 
-    // Enter key for search
-    document.getElementById('searchInput').addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') {
-        performSearch();
+      .search-input:focus {
+        border-color: #6366f1;
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
       }
-    });
-  </script>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+      .search-btn {
+        background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+      }
+
+      .search-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+      }
+
+      /* Main Content */
+      .main-content {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+
+      .section-header {
+        color: #1e293b;
+        text-align: center;
+        margin: 32px 0 24px;
+      }
+
+      .section-header h2 {
+        font-weight: 600;
+        font-size: 24px;
+        margin-bottom: 8px;
+      }
+
+      .section-header p {
+        font-size: 14px;
+        color: #64748b;
+      }
+
+      /* Dashboard Grid */
+      .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 20px;
+        margin-bottom: 24px;
+      }
+
+      .dashboard-card {
+        background: white;
+        border-radius: 14px;
+        padding: 24px;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+        border: 1px solid #e2e8f0;
+        transition: all 0.3s ease;
+      }
+
+      .dashboard-card:hover {
+        border-color: #8b5cf6;
+        box-shadow: 0 8px 24px rgba(139, 92, 246, 0.15);
+        transform: translateY(-2px);
+      }
+
+      .card-header-custom {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 16px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #f1f5f9;
+      }
+
+      .card-icon-large {
+        width: 48px;
+        height: 48px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+      }
+
+      .card-icon-large.blue {
+        background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+        color: #4f46e5;
+      }
+      .card-icon-large.green {
+        background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+        color: #059669;
+      }
+      .card-icon-large.orange {
+        background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+        color: #d97706;
+      }
+
+      .card-title h3 {
+        color: #1e293b;
+        font-size: 16px;
+        font-weight: 600;
+        margin: 0;
+      }
+
+      .card-title p {
+        color: #64748b;
+        font-size: 12px;
+        margin: 4px 0 0 0;
+      }
+
+      .activity-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .activity-item {
+        padding: 12px;
+        margin-bottom: 8px;
+        background: linear-gradient(135deg, #faf5ff 0%, #f5f3ff 100%);
+        border-radius: 8px;
+        border-left: 3px solid #8b5cf6;
+        transition: all 0.2s ease;
+        cursor: pointer;
+      }
+
+      .activity-item:hover {
+        background: linear-gradient(135deg, #f3e8ff 0%, #ede9fe 100%);
+        transform: translateX(4px);
+      }
+
+      .activity-item strong {
+        color: #1e293b;
+        font-weight: 500;
+        font-size: 14px;
+      }
+
+      .activity-item span {
+        color: #64748b;
+        font-size: 12px;
+        display: block;
+        margin-top: 4px;
+      }
+
+      .view-all-btn {
+        background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 500;
+        width: 100%;
+        margin-top: 12px;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+      }
+
+      .view-all-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+      }
+
+      .view-all-btn:hover {
+        background: #1d4ed8;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .nav-content {
+          flex-direction: column;
+          gap: 12px;
+        }
+
+        .coordinator-profile {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .coordinator-badges {
+          justify-content: center;
+        }
+
+        .stats-overview {
+          grid-template-columns: 1fr;
+        }
+
+        .dashboard-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .search-box {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+      <div class="nav-content">
+        <div class="logo">
+          <i class="fas fa-graduation-cap"></i> EduTrack Pro
+        </div>
+        <div class="nav-actions">
+          <button
+            class="nav-btn"
+            onclick="window.location.href = 'coordinator_approaval.html'"
+          >
+            <i class="fas fa-tasks"></i> Pending (23)
+          </button>
+          <button
+            class="nav-btn secondary"
+            onclick="alert('Notifications: 12 new activities submitted')"
+          >
+            <i class="fas fa-bell"></i> Notifications
+          </button>
+          <button
+            class="nav-btn secondary"
+            onclick="window.location.href = 'index.html'"
+          >
+            <i class="fas fa-sign-out-alt"></i> Logout
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Dashboard Header -->
+    <div class="dashboard-header">
+      <div class="coordinator-profile">
+        <div class="coordinator-avatar">
+          <i class="fas fa-user-tie"></i>
+        </div>
+        <div class="coordinator-info">
+          <h2>Prof. Coordinator Name</h2>
+          <p>
+            <i class="fas fa-envelope"></i> coordinator@edutrack.edu |
+            <i class="fas fa-phone"></i> +91 98765 43210
+          </p>
+          <div class="coordinator-badges">
+            <span class="badge-item"
+              ><i class="fas fa-users"></i> Managing 45 Students</span
+            >
+            <span class="badge-item"
+              ><i class="fas fa-certificate"></i> Computer Science Dept</span
+            >
+            <span class="badge-item"
+              ><i class="fas fa-check-circle"></i> Verified Coordinator</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="stats-overview">
+      <div class="stat-card">
+        <div class="stat-icon blue">
+          <i class="fas fa-users"></i>
+        </div>
+        <h4>Assigned Students</h4>
+        <h2>45</h2>
+        <span class="stat-trend"
+          ><i class="fas fa-arrow-up"></i> +5 this month</span
+        >
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon orange">
+          <i class="fas fa-clock"></i>
+        </div>
+        <h4>Pending Approvals</h4>
+        <h2>23</h2>
+        <span class="stat-trend"
+          ><i class="fas fa-exclamation-circle"></i> Needs attention</span
+        >
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon green">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        <h4>Approved This Week</h4>
+        <h2>67</h2>
+        <span class="stat-trend"
+          ><i class="fas fa-arrow-up"></i> +15% from last week</span
+        >
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon purple">
+          <i class="fas fa-trophy"></i>
+        </div>
+        <h4>Total Activities</h4>
+        <h2>234</h2>
+        <span class="stat-trend"
+          ><i class="fas fa-chart-line"></i> Growing steadily</span
+        >
+      </div>
+    </div>
+
+    <!-- Search Section -->
+    <div class="search-container">
+      <div class="search-card">
+        <div class="search-box">
+          <input
+            type="text"
+            class="search-input"
+            id="searchInput"
+            placeholder="🔍 Search students, activities, or requests..."
+          />
+          <button class="search-btn" onclick="performSearch()">
+            <i class="fas fa-search"></i> Search
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Section Header -->
+      <div class="section-header">
+        <h2>📊 Dashboard Overview</h2>
+        <p>Monitor student activities and manage approval requests</p>
+      </div>
+
+      <!-- Dashboard Grid -->
+      <div class="dashboard-grid">
+        <!-- Recent Activity Card -->
+        <div class="dashboard-card">
+          <div class="card-header-custom">
+            <div class="card-icon-large blue">
+              <i class="fas fa-history"></i>
+            </div>
+            <div class="card-title">
+              <h3>Recent Activity</h3>
+              <p>Latest student submissions</p>
+            </div>
+          </div>
+          <ul class="activity-list">
+            <li
+              class="activity-item"
+              onclick="alert('View Lisa Parker submission details')"
+            >
+              <strong><i class="fas fa-user"></i> Lisa Parker</strong>
+              <span>Submitted AI Workshop Certificate - 2 hours ago</span>
+            </li>
+            <li
+              class="activity-item"
+              onclick="alert('View Priya Patel submission details')"
+            >
+              <strong><i class="fas fa-user"></i> Priya Patel</strong>
+              <span>AWS Certification uploaded - 5 hours ago</span>
+            </li>
+            <li
+              class="activity-item"
+              onclick="alert('View Arya Singh submission details')"
+            >
+              <strong><i class="fas fa-user"></i> Arya Singh</strong>
+              <span>Competition Winner Certificate - 8 hours ago</span>
+            </li>
+            <li
+              class="activity-item"
+              onclick="alert('View Raj Kumar submission details')"
+            >
+              <strong><i class="fas fa-user"></i> Raj Kumar</strong>
+              <span>Updated profile information - 1 day ago</span>
+            </li>
+          </ul>
+          <button
+            class="view-all-btn"
+            onclick="alert('Viewing all recent activities...')"
+          >
+            <i class="fas fa-list"></i> View All Activities
+          </button>
+        </div>
+
+        <!-- Pending Requests Card -->
+        <div class="dashboard-card">
+          <div class="card-header-custom">
+            <div class="card-icon-large orange">
+              <i class="fas fa-tasks"></i>
+            </div>
+            <div class="card-title">
+              <h3>Pending Requests</h3>
+              <p>Awaiting your approval</p>
+            </div>
+          </div>
+          <ul class="activity-list">
+            <li
+              class="activity-item"
+              onclick="window.location.href = 'coordinator_approaval.html'"
+            >
+              <strong
+                ><i class="fas fa-certificate"></i> Certificate Approval</strong
+              >
+              <span>Lisa Parker - Workshop Participation</span>
+            </li>
+            <li
+              class="activity-item"
+              onclick="window.location.href = 'coordinator_approaval.html'"
+            >
+              <strong
+                ><i class="fas fa-award"></i> Certification Verification</strong
+              >
+              <span>Priya Patel - AWS Cloud Practitioner</span>
+            </li>
+            <li
+              class="activity-item"
+              onclick="window.location.href = 'coordinator_approaval.html'"
+            >
+              <strong
+                ><i class="fas fa-trophy"></i> Competition Achievement</strong
+              >
+              <span>Arya Singh - National Coding Contest</span>
+            </li>
+            <li
+              class="activity-item"
+              onclick="window.location.href = 'coordinator_approaval.html'"
+            >
+              <strong
+                ><i class="fas fa-project-diagram"></i> Project
+                Submission</strong
+              >
+              <span>Rohit Sharma - Final Year Project</span>
+            </li>
+          </ul>
+          <button
+            class="view-all-btn"
+            onclick="window.location.href = 'coordinator_approaval.html'"
+          >
+            <i class="fas fa-check-double"></i> Review All Requests (23)
+          </button>
+        </div>
+
+        <!-- Student Management Card -->
+        <div class="dashboard-card">
+          <div class="card-header-custom">
+            <div class="card-icon-large green">
+              <i class="fas fa-user-graduate"></i>
+            </div>
+            <div class="card-title">
+              <h3>Student Management</h3>
+              <p>Manage assigned students</p>
+            </div>
+          </div>
+          <ul class="activity-list">
+            <li
+              class="activity-item"
+              onclick="alert('View all assigned students')"
+            >
+              <strong><i class="fas fa-users"></i> View All Students</strong>
+              <span>45 students assigned to you</span>
+            </li>
+            <li
+              class="activity-item"
+              onclick="alert('Search student profiles')"
+            >
+              <strong><i class="fas fa-search"></i> Search Students</strong>
+              <span>Find and view student profiles</span>
+            </li>
+            <li class="activity-item" onclick="alert('View student analytics')">
+              <strong
+                ><i class="fas fa-chart-bar"></i> Student Analytics</strong
+              >
+              <span>View performance and engagement</span>
+            </li>
+            <li class="activity-item" onclick="alert('Export student reports')">
+              <strong><i class="fas fa-file-export"></i> Export Reports</strong>
+              <span>Download student activity reports</span>
+            </li>
+          </ul>
+          <button
+            class="view-all-btn"
+            onclick="alert('Opening student management panel...')"
+          >
+            <i class="fas fa-cog"></i> Manage Students
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Search functionality
+      function performSearch() {
+        const searchTerm = document.getElementById("searchInput").value;
+        if (searchTerm.trim() === "") {
+          alert("Please enter a search term");
+          return;
+        }
+        alert(
+          `Searching for: ${searchTerm}\n\nThis will display matching students and activities.`,
+        );
+      }
+
+      // Enter key for search
+      document
+        .getElementById("searchInput")
+        .addEventListener("keypress", function (e) {
+          if (e.key === "Enter") {
+            performSearch();
+          }
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
 </html>

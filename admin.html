@@ -394,6 +394,94 @@
           grid-template-columns: repeat(2, 1fr);
         }
       }
+
+      /* Small Mobile Devices */
+      @media (max-width: 480px) {
+        .nav-content {
+          padding: 0 12px;
+        }
+
+        .logo {
+          font-size: 16px;
+        }
+
+        .nav-btn {
+          padding: 6px 12px;
+          font-size: 12px;
+        }
+
+        .nav-actions {
+          gap: 8px;
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+
+        .main-container {
+          padding: 12px;
+        }
+
+        .dashboard-header {
+          padding: 16px;
+        }
+
+        .dashboard-header h2 {
+          font-size: 18px;
+        }
+
+        .quick-stats {
+          grid-template-columns: 1fr;
+          gap: 10px;
+        }
+
+        .stat-box h3 {
+          font-size: 20px;
+        }
+
+        .stat-box p {
+          font-size: 11px;
+        }
+
+        .dashboard-card {
+          padding: 16px;
+        }
+
+        .dashboard-card h3 {
+          font-size: 16px;
+        }
+
+        .dashboard-card p {
+          font-size: 13px;
+        }
+
+        .card-icon {
+          width: 48px;
+          height: 48px;
+          font-size: 20px;
+        }
+
+        /* Touch-friendly tap targets */
+        button,
+        .nav-btn,
+        .dashboard-card {
+          min-height: 44px;
+        }
+      }
+
+      /* Improve touch interactions */
+      @media (hover: none) and (pointer: coarse) {
+        .nav-btn:hover,
+        .dashboard-card:hover,
+        .stat-box:hover {
+          transform: none;
+        }
+
+        .nav-btn:active,
+        .dashboard-card:active,
+        .stat-box:active {
+          transform: scale(0.98);
+          opacity: 0.9;
+        }
+      }
     </style>
   </head>
   <body>

@@ -347,6 +347,105 @@
           grid-template-columns: 1fr;
         }
       }
+
+      /* Small Mobile Devices */
+      @media (max-width: 480px) {
+        .nav-content {
+          padding: 0 12px;
+        }
+
+        .logo {
+          font-size: 16px;
+        }
+
+        .nav-btn {
+          padding: 6px 12px;
+          font-size: 12px;
+        }
+
+        .nav-actions {
+          gap: 8px;
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+
+        .admin-header {
+          padding: 16px;
+          margin: 12px;
+        }
+
+        .admin-avatar {
+          width: 60px;
+          height: 60px;
+          font-size: 24px;
+        }
+
+        .admin-info h2 {
+          font-size: 16px;
+        }
+
+        .admin-info p {
+          font-size: 12px;
+        }
+
+        .badge-item {
+          font-size: 10px;
+          padding: 3px 8px;
+        }
+
+        .stat-card {
+          padding: 14px;
+        }
+
+        .stat-card h2 {
+          font-size: 22px;
+        }
+
+        .stat-card h4 {
+          font-size: 11px;
+        }
+
+        .page-header h2 {
+          font-size: 18px;
+        }
+
+        .page-header p {
+          font-size: 12px;
+        }
+
+        .card {
+          border-radius: 10px;
+        }
+
+        .chart-container {
+          width: 200px;
+          height: 200px;
+        }
+
+        /* Touch-friendly tap targets */
+        button,
+        .nav-btn,
+        .badge-item {
+          min-height: 44px;
+          min-width: 44px;
+        }
+      }
+
+      /* Improve touch interactions */
+      @media (hover: none) and (pointer: coarse) {
+        .nav-btn:hover,
+        .stat-card:hover,
+        .card:hover {
+          transform: none;
+        }
+
+        .nav-btn:active,
+        .stat-card:active,
+        .card:active {
+          transform: scale(0.98);
+          opacity: 0.9;
+        }
+      }
     </style>
   </head>
   <body>
